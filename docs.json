@@ -1,11 +1,11 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "linden",
-  "name": "MasteringX",
+  "name": "MasteringX Documentation",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#FF5522",
+    "light": "#FF5522",
+    "dark": "#FF5522"
   },
   "favicon": "/favicon.svg",
   "navigation": {
