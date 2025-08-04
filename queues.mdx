@@ -1,0 +1,98 @@
+
+<Warning>
+️ Important:
+ Your MasteringX installation will **not function correctly** unless background jobs are configured. Features will silently fail if the queue worker isn't running.
+</Warning>
+
+Some processes in your MasteringX application can take loads of time to complete.For example, sending emails, processing videos, etc.
+Instead of making the user wait, MasteringX handles these processes **asynchronously** in the background using **Laravel Queues**.
+
+---
+
+## What Are Queues?
+
+Queues let you defer time-consuming tasks and run them in the background. When you  uploads a video, MasteringX places that task into a queue, and then a background process picks it up and completes it.
+
+Learn more in the [Laravel Queue docs](https://laravel.com/docs/queues).
+
+---
+
+## Requirements
+
+[//]: # (* **Redis** is required as the queue backend.)
+* You need a process manager like **Supervisor** to keep the queue worker running in production.
+
+---
+
+## Configuration
+
+Open your `.env` file and make sure this setting is present:
+
+```env
+QUEUE_CONNECTION=database
+```
+
+[//]: # (Also, ensure Redis is installed and running on your server. You can test it by running:)
+
+[//]: # (```bash)
+[//]: # (redis-cli ping)
+[//]: # (```)
+
+[//]: # (If you get back `PONG`, Redis is up.)
+
+---
+
+## Running the Worker
+
+To start the queue worker manually, run:
+
+```bash
+php artisan queue:work
+```
+
+This command will keep running and process new jobs as they come in. But in production, you'll want this to keep running even if the server restarts.
+
+---
+
+
+
+## Using Supervisor
+
+Use **Supervisor** to manage the queue worker in production. It restarts the queue worker automatically if it crashes or your server reboots.
+
+Here’s a typical config file for Supervisor:
+
+```bash
+sudo nano /etc/supervisor/conf.d/masteringx-worker.conf
+```
+
+Paste the following:
+
+```conf
+[program:queue-worker]
+process_name=%(program_name)s_%(process_num)02d
+command=php /path/to/masteringx/artisan queue:work --sleep=3 --tries=3 --timeout=3600
+autostart=true
+autorestart=true
+user=www-data
+numprocs=1
+redirect_stderr=true
+stdout_logfile=/path/to/masteringx/storage/logs/worker.log
+stopwaitsecs=3600
+```
+
+Then run:
+
+```bash
+sudo supervisorctl reread
+sudo supervisorctl update
+sudo supervisorctl start queue-worker:*
+```
+
+To check the status:
+
+```bash
+sudo supervisorctl status masteringx-worker:*
+```
+
+---

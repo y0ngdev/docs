@@ -1,0 +1,57 @@
+---
+title: User Purchase Flow
+---
+
+
+Masteringx uses a **purchase-first user flow**, users don’t sign up with a form. Instead, accounts are automatically created **after successful payment**.
+
+This keeps the experience simple and focused, but it requires Stripe and email to be set up properly.
+
+---
+
+##  Step-by-Step: What Happens When a User Buys a Course
+
+Here’s how the system works behind the scenes:
+
+1. **User clicks the “Buy” button** on the landing page.
+2. The user is redirected to **Stripe Checkout**.
+3. If the payment is successful, Stripe sends a redirect back to the success url.
+4. Your app receives the event and performs the following:
+
+    * Extracts the **user’s email** from the Stripe session data.
+    * Checks if a user already exists with that email.
+    * If the user **doesn’t exist**:
+
+        * A new user is created.
+        * A **random password** is generated.
+        * The user is marked as verified and logged in.
+        * A **welcome email** is sent with login credentials or a magic link.
+    * If the user **already exists**, they are simply logged in and granted course access.
+5. The user is redirected to their dashboard with immediate access to the course they just bought.
+
+> ✅ **No registration page is required** — user accounts are only created after a successful purchase.
+
+---
+
+## ⚠️ Email Is Required
+
+> ⚠️ **Important:**
+> Your SMTP/email settings **must be properly configured** in `.env`.
+> Without email delivery in place, new users **won’t receive** their credentials or access info — and may be locked out.
+
+At minimum, ensure:
+
+```
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.mailtrap.io  # or your provider
+MAIL_PORT=587
+MAIL_USERNAME=your-username
+MAIL_PASSWORD=your-password
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=no-reply@yourdomain.com
+MAIL_FROM_NAME="MasteringX"
+```
+
+You should also test email delivery in staging before launching.
+
+

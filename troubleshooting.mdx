@@ -1,0 +1,277 @@
+This page outlines common problems you might face while using **MasteringX**, and how to fix them effectively.
+
+Powering MasteringX's backend is  **Laravel** and frontend is, **Vue.js** , so issues typically fall into one of those two categories.
+
+##  Backend Issues (Laravel)
+
+###  500 Internal Server Error
+
+**Symptoms**: Error page containing generic server error or Blank screen.
+
+**Solutions**:
+
+1. **Fix file permissions**:
+
+   ```bash
+   chmod -R 755 /path/to/masteringx
+   chmod -R 775 storage bootstrap/cache
+   chown -R www-data:www-data /path/to/masteringx
+   ```
+
+2. **Clear Laravel caches**:
+
+   ```bash
+   php artisan cache:clear
+   php artisan config:clear
+   php artisan route:clear
+   php artisan view:clear
+   ```
+
+3. **Tail the logs for deeper insight**:
+
+   ```bash
+   tail -f storage/logs/laravel.log
+   ```
+
+---
+
+###  Database Connection Issues
+
+**Symptoms**: `SQLSTATE` errors, database connection refused.
+
+**Solutions**:
+
+1. **Verify `.env` DB settings**:
+
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=your_database_name
+   DB_USERNAME=your_username
+   DB_PASSWORD=your_password
+   ```
+
+2. **Test DB connection**:
+
+   ```bash
+   php artisan db:test-connection
+   ```
+
+   >  ✅ *Successfully connected to the database: `your_database_name`*
+
+3. **Run migrations** (if necessary):
+
+   ```bash
+   php artisan migrate --force
+   ```
+
+---
+
+### Session or Authentication Issues
+
+**Symptoms**: Users being logged out frequently or session errors.
+
+**Solutions**:
+
+1. **Review session settings**:
+
+   ```env
+   SESSION_DRIVER=file
+   SESSION_LIFETIME=120
+   ```
+
+2. **Ensure app key is set**:
+
+   ```bash
+   php artisan key:generate
+   ```
+
+---
+
+##  Frontend Issues (Vue.js)
+
+### Blank Page or JavaScript Errors
+
+**Symptoms**: White screen, unresponsive UI, or broken components.
+
+**Solutions**:
+
+1. **Rebuild frontend assets**:
+
+   ```bash
+   npm ci
+   npm run build
+   ```
+
+2. **Check browser console for errors**:
+
+   * Press `F12` to open DevTools
+   * View the **Console** tab for  error messages
+   * Use **Network** tab to check failed requests
+
+3. **Clear browser cache**:
+
+   * Hard refresh: `Ctrl + F5` (Windows) or `Cmd + Shift + R` (Mac)
+   * Clear cookies and local storage if needed
+
+4. **Check for `hot` file in `public/`**:
+   If you're seeing unexpected frontend behavior or blank pages during production deployment, check for this file:
+
+   ```bash
+   rm public/hot
+   ```
+
+   > `public/hot` is used by Vite for local development. If it's left behind, the app may try to connect to `localhost:5173`, causing rendering issues in production.
+
+---
+
+##  File Upload Issues
+
+**Symptoms**: Uploads failing, permission denied, or image previews broken.
+
+**Solutions**:
+
+1. **Check permissions on upload folders**:
+
+   ```bash
+   chmod -R 775 storage/app/public
+   chmod -R 775 public/storage
+   ```
+
+2. **Create symbolic storage link**:
+
+   ```bash
+   php artisan storage:link
+   ```
+
+3. **Check your PHP limits**:
+   Edit your `php.ini` and ensure these are high enough:
+
+   * `upload_max_filesize`
+   * `post_max_size`
+   * `memory_limit`
+   * `max_execution_time`
+   * `max_input_time`
+   * `max_file_uploads`
+
+   Also verify web server limits (Nginx/Apache).
+
+---
+
+## Performance Issues
+
+### App Feels Slow or Sluggish
+
+**Solutions**:
+
+1. **Enable caching**:
+
+   ```bash
+   php artisan config:cache
+   php artisan route:cache
+   php artisan view:cache
+   ```
+
+2. **Optimize database**:
+
+   ```bash
+   php artisan optimize
+   ```
+
+3. **Monitor server usage**:
+
+   * Check CPU and memory load
+   * Consider switching to a better server or scaling up
+
+---
+
+##  Environment Setup
+
+### ️ Production vs Development Mistakes
+
+**Common mistakes**:
+
+1. **Debug mode enabled in production**:
+
+   ```env
+   APP_ENV=production
+   APP_DEBUG=false # Should be false in production
+   ```
+
+2. **Missing variables in `.env`**:
+
+   * Compare with `.env.example`
+   * Make sure all keys are defined
+
+3. **Running wrong frontend build**:
+
+   ```bash
+   # For production
+   npm run build  
+  
+   # For local development
+   npm run dev   
+   ```
+---
+
+##  General Debugging Workflow
+
+When stuck, try the following:
+
+1. **Check logs**:
+
+   * Laravel: `storage/logs/artisan.log`
+   * Web server (e.g., Nginx/Apache)
+   * Browser console
+
+2. **Temporarily enable debug mode**:
+
+   ```env
+   APP_DEBUG=true
+   ```
+   <Warning> ⚠️ Don’t forget to set value to `false` in production.</Warning>
+
+3. **Clear everything**:
+
+   ```bash
+   php artisan optimize:clear
+   npm run build
+   ```
+
+4. **Fix file permissions**:
+
+   ```bash
+   find /path-to/masteringx -type f -exec chmod 644 {} \;
+   find /path-to/masteringx -type d -exec chmod 755 {} \;
+   chmod -R 775 storage bootstrap/cache
+   ```
+
+---
+
+## Still Stuck?
+
+Try these steps:
+
+1. Search the exact error message online
+
+2. Make sure you're using supported PHP and Node.js versions
+
+3. Check if a `public/hot` file is accidentally left in production
+
+4. Restore from backup if necessary
+
+5. Reach out to support with specific error details
+
+
+<Note>
+TIP
+
+Always backup your database and files before attempting any fixes, especially in production environments.
+</Note>
+
+
+
+
+
+

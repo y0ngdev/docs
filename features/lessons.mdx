@@ -1,0 +1,45 @@
+Each **lesson** is an individual unit of learning. Lessons usually include a video, but they can also have accompanying text, code samples, or resource links.
+
+
+<Warning>
+ **Important**: 
+
+Make sure your server has **FFmpeg** installed and that the **queue worker is running**. Uploaded videos are processed in the background using a queue job. If either FFmpeg or your queue is not active, videos will not be processed or streamable.
+</Warning>
+---
+
+### How to Add a Lesson
+
+To add a lesson :
+
+
+
+
+1. In the **Admin Panel**, navigate to the **Lessons** page or go directly to:
+   `https://your-domain.com/admin/lessons`
+
+2. Click on the **“New Lesson”** button at the top right.
+
+3. Fill in the lesson details:
+
+   * `Title` – e.g., *“Writing Your First SQL Query”*
+
+   *  `Slug` – auto-generated from the title, but you can edit it if you prefer a custom URL.
+
+   * `Module` – select the module you want this lesson to belong to.
+
+   * `Postion` – required and must be unique within the module. This determines the order in which lessons are displayed.
+
+   * `Lesson Summary`  – supports Markdown; use this to describe what the lesson covers or any important notes.
+
+   * `Video`  – upload a video file. *Currently, only uploads to the `private` disk are supported.*
+
+   * `Duration` – optional. If present in the video’s metadata, FFMpeg will automatically extract and display it.
+
+   * `Free preview` – required. Choose whether this lesson is available for free preview or restricted behind a paywall.
+
+   * `Published` – required. Determines whether the lesson is visible to learners on the frontend.
+
+4. Click **“Create”** to save the lesson.
+
+> ⚠️ **Note**: Ensure your uploaded video has proper metadata. The system relies on this to detect video duration and perform video processing with FFMpeg.

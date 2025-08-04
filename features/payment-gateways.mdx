@@ -1,0 +1,58 @@
+---
+title: "Payment Gateways"
+---
+
+MasteringX currently supports **Stripe** as the sole payment gateway for handling payments.
+
+> ⚠️ Payment processors can be configured through:  
+> - The `.env` configuration file  
+> - **Admin Dashboard → Settings → Payment Processors**
+
+---
+
+## Stripe Integration
+
+You can enable and manage Stripe in two ways:
+
+###  Using the `.env` File
+
+Add the following variables to your `.env` file:
+
+```env
+STRIPE_ENABLED=true
+STRIPE_SECRET_KEY=your_stripe_secret_key
+STRIPE_PUBLIC_KEY=your_stripe_public_key
+````
+
+Be sure to replace the placeholders with your actual Stripe credentials, which are available from your [Stripe dashboard](https://dashboard.stripe.com/).
+
+---
+
+###  Using the Admin Dashboard
+
+You can also enable and configure Stripe directly in the admin panel:
+
+**Admin Dashboard → Settings → Payment Processors**
+
+Changes made through the dashboard are applied instantly.
+
+---
+
+###  Clearing the Configuration Cache
+
+If you make changes via the `.env` file, don’t forget to clear the configuration cache to apply them:
+
+```bash
+php colibri cache:clear
+```
+
+---
+
+[//]: # (## 💡 Need More Gateways?)
+
+[//]: # (Want support for additional payment providers like Paystack, Flutterwave, or PayPal?)
+[//]: # (Custom gateway integration is available — [Reach out via terla.me]&#40;https://terla.me&#41;.)
+
+[//]: # (---)
+
+

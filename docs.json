@@ -14,22 +14,27 @@
         "tab": "Guides",
         "groups": [
           {
-            "group": "Get Started",
+            "group": "Getting Started",
             "pages": [
               "index",
-              "requirements",
-              "installation"
+              "installation",
+              "ffmpeg",
+              "SMTP",
+              "queues",
+              "troubleshooting"
             ]
           },
           {
-            "group": "Essentials",
+            "group": "Features",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/settings",
-              "essentials/navigation",
-              "essentials/reusable-snippets"
+              "features/admin-panel",
+              "features/payment-gateways",
+              "features/testimonials",
+              "features/articles",
+              "features/modules",
+              "features/lessons",
+              "features/purchase-flow",
+              "features/demo"
             ]
           }
         ]

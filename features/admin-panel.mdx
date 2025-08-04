@@ -1,0 +1,344 @@
+---
+title: "Admin Panel"
+---
+MasteringX includes a fully functional,  admin panel powered by **Filament**.  
+
+
+> 🛑 **Important:**  
+> - The admin panel does **not** have a separate login page.  
+> - All users log in through the **main site login page**, including admins.  
+> - If a logged-in user has admin privileges, they can access the panel using https://your-domain.com/admin
+
+---
+
+## 👨‍💻 Creating an Admin User
+
+Admins are regular users with elevated privileges that allow them to manage the platform through the admin dashboard. You can create one using the built-in Artisan command.
+
+### 1. Run the Command
+
+Open your terminal and execute:
+
+```bash
+php artisan add:admin
+````
+
+You will be prompted to enter:
+
+* **Name**
+* **Email**
+* **Password**
+
+Once completed, you'll see:
+
+```text
+Admin user 'test@example.com' created successfully.
+```
+
+---
+
+## 🚪 Accessing the Admin Panel
+
+After the admin user is created, simply log in to the site with their credentials.
+
+If the user has admin privileges, the **Admin Panel** link will appear in the navbar. You can also access it directly via:
+
+```url
+https://your-domain.com/admin
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[//]: # (Admin Panel)
+
+[//]: # (ColibriPlus comes with a fully functional admin panel build on Laravel with Livewire, Alpine.js and TailwindCSS.)
+
+[//]: # ()
+[//]: # ([//]: # &#40;🔴 Important: We are not using any admin panel package from laravel ecosystem, or any other templates or ready-made solutions. We are using our own admin panel built from scratch.&#41;)
+[//]: # ()
+[//]: # (Important Notes)
+
+[//]: # (WARNING)
+
+[//]: # ()
+[//]: # (Please pause and read this carefully. ⚠️⚠️⚠️)
+
+[//]: # ()
+[//]: # (Please note, that Admin panel does not have it's specific login page for admins. Admin authorization is done via the main site login page.)
+
+[//]: # ()
+[//]: # ()
+[//]: # ([//]: # &#40;If you are logged in, and you have admin role, you will see admin panel link in the main navbar.&#41;)
+[//]: # (### Assigning Admin Role)
+
+[//]: # (Before accession the admin panel, let's create a new user if you did not create one yet. Since admin is also a user like any other user, but with special permissions and admin privileges.)
+
+[//]: # ()
+[//]: # (Follow all steps below to create admin user. 👇👇👇)
+
+[//]: # ()
+[//]: # (1. Signing Up)
+
+[//]: # (   After installation, sing up on your site with your email, username, and password.)
+
+[//]: # ()
+[//]: # (2. Assigning admin role)
+
+[//]: # (   After signing up, we have to assign admin role to the user. Open your terminal and run the following command:)
+
+[//]: # ()
+[//]: # (```bash)
+
+[//]: # (php artisan add:admin)
+
+[//]: # (```)
+
+[//]: # (This command will ask to enter the username of the user you want to assign admin role to.)
+
+[//]: # ()
+[//]: # (After entering the username, you will see the following message:)
+
+[//]: # ()
+[//]: # (💡 Admin role assigned successfully.)
+
+[//]: # ()
+[//]: # (#### Entering)
+
+[//]: # (After assigning admin role, you can access the admin panel by going to https://your-domain.com/admin.)
+
+[//]: # ()
+[//]: # ()
+[//]: # ()
+[//]: # (Here’s a cleaner and more polished version of your admin panel documentation for **ColibriPlus**, while preserving the clarity and developer tone:)
+
+[//]: # ()
+[//]: # (---)
+
+[//]: # ()
+[//]: # (# 🔧 Admin Panel Guide)
+
+[//]: # ()
+[//]: # (ColibriPlus ships with a fully functional admin panel built from scratch using **Laravel**, **Livewire**, **Alpine.js**, and **TailwindCSS** — no third-party admin templates or Laravel admin packages are used.)
+
+[//]: # ()
+[//]: # (> 🛑 **Important:**)
+
+[//]: # (> The admin panel **does not** have a separate login page. Admins log in through the **main site login** like regular users. Once logged in, users with the admin role will automatically see an "Admin Panel" link in the main navbar.)
+
+[//]: # ()
+[//]: # (---)
+
+[//]: # ()
+[//]: # (## 👤 Assigning Admin Role)
+
+[//]: # ()
+[//]: # (To access the admin panel, you need to assign the **admin role** to a user. Follow the steps below:)
+
+[//]: # ()
+[//]: # (### 1. Sign Up)
+
+[//]: # ()
+[//]: # (After installing the application, register a new user by signing up through the main site with your email, username, and password.)
+
+[//]: # ()
+[//]: # (### 2. Assign Admin Privileges)
+
+[//]: # ()
+[//]: # (Once the user is created, run the following command in your terminal to assign admin rights:)
+
+[//]: # ()
+[//]: # (```bash)
+
+[//]: # (php artisan add:admin)
+
+[//]: # (```)
+
+[//]: # ()
+[//]: # (You’ll be prompted to enter the **username** of the user you want to make an admin.)
+
+[//]: # ()
+[//]: # (If successful, you’ll see:)
+
+[//]: # ()
+[//]: # (```)
+
+[//]: # (💡 Admin role assigned successfully.)
+
+[//]: # (```)
+
+[//]: # ()
+[//]: # (---)
+
+[//]: # ()
+[//]: # (## 🚪 Accessing the Admin Panel)
+
+[//]: # ()
+[//]: # (Once the user is granted admin privileges, you can access the admin dashboard by visiting:)
+
+[//]: # ()
+[//]: # (```)
+
+[//]: # (https://your-domain.com/admin)
+
+[//]: # (```)
+
+[//]: # ()
+[//]: # (---)
+
+[//]: # ()
+[//]: # (> ⚠️ **Heads up:**)
+
+[//]: # (> Only users with the admin role will be allowed to access this page. All others will be redirected or shown an access denied message.)
+
+[//]: # ()
+[//]: # (---)
+
+[//]: # ()
+[//]: # (Would you like a version of this in Markdown, HTML, or ready to plug into your Filament or Laravel views? I can help you generate that too!)
+
+[//]: # ()
+[//]: # ()
+[//]: # ()
+[//]: # ()
+[//]: # ()
+[//]: # (Sure! Here's the complete documentation in **Markdown** format, tailored for **MasteringX** and using your custom `php artisan add:admin` command:)
+
+[//]: # ()
+[//]: # (````markdown)
+
+[//]: # (# 🔧 Admin Panel – MasteringX)
+
+[//]: # ()
+[//]: # (MasteringX comes with a powerful, handcrafted admin panel built using **Laravel**, **Livewire**, **Alpine.js**, and **TailwindCSS** — no external admin templates or packages are used. It’s built from scratch to give you full control.)
+
+[//]: # ()
+[//]: # (> 🛑 **Important:**  )
+
+[//]: # (> The admin panel does **not** have a separate login page. All users — including admins — log in through the **main site login**.  )
+
+[//]: # (>  )
+
+[//]: # (> If a logged-in user has admin privileges, the **"Admin Panel"** link will automatically appear in the main navigation bar.)
+
+[//]: # ()
+[//]: # (---)
+
+[//]: # ()
+[//]: # (## 👨‍💻 Creating an Admin User)
+
+[//]: # ()
+[//]: # (Admin users are regular users with elevated privileges. You can create an admin user using the built-in Artisan command.)
+
+[//]: # ()
+[//]: # (### 1. Run the Command)
+
+[//]: # ()
+[//]: # (Open your terminal and run:)
+
+[//]: # ()
+[//]: # (```bash)
+
+[//]: # (php artisan add:admin)
+
+[//]: # (````)
+
+[//]: # ()
+[//]: # (The command will prompt you for:)
+
+[//]: # ()
+[//]: # (* **Name**)
+
+[//]: # (* **Email**)
+
+[//]: # (* **Password**)
+
+[//]: # ()
+[//]: # (After filling in the details, you should see a confirmation message:)
+
+[//]: # ()
+[//]: # (```)
+
+[//]: # (💡 Admin user created successfully.)
+
+[//]: # (```)
+
+[//]: # ()
+[//]: # (---)
+
+[//]: # ()
+[//]: # (## 🚪 Accessing the Admin Panel)
+
+[//]: # ()
+[//]: # (Once the admin user is created, log in through the main site using their credentials.)
+
+[//]: # (If the user has admin privileges, they'll see an **Admin Panel** link in the navbar.)
+
+[//]: # ()
+[//]: # (Alternatively, you can go directly to:)
+
+[//]: # ()
+[//]: # (```)
+
+[//]: # (https://your-domain.com/admin)
+
+[//]: # (```)
+
+[//]: # ()
+[//]: # (> 🔐 Only admin users can access this route. Unauthorized users will be denied.)
+
+[//]: # ()
+[//]: # (---)
+
+[//]: # ()
+[//]: # (## ✅ Summary)
+
+[//]: # ()
+[//]: # (* ✅ Admin panel is custom-built with Livewire, Alpine.js, and TailwindCSS)
+
+[//]: # (* ✅ Admins use the regular login page)
+
+[//]: # (* ✅ Create admin users using `php artisan add:admin`)
+
+[//]: # (* ✅ Admin dashboard available at `/admin`)
+
+[//]: # ()
+[//]: # (---)
+
+[//]: # ()
+[//]: # (```)
+
+[//]: # ()
+[//]: # (Let me know if you'd like to include screenshots, callouts, or badges for a docs site—or want a version tailored to Filament UI or Laravel Breeze.)
+
+[//]: # (```)

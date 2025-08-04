@@ -1,3 +1,385 @@
 ---
 title: "Installation"
 ---
+
+# Use quill bot
+
+**MasteringX is a Laravel powered full-stack web application, designed primarily for Linux environments.**
+
+To run MasteringX efficiently, you will either a VPS or VDS server. This is due to its reliance on an extensive set of
+backend services.
+
+It is not a lightweight script that can run on shared hosting; rather, it is a modern web app designed for performance
+and versatility.
+
+
+<Warning>
+ If you're not familiar with the installation process or with server management, **please [contact us](mailto:prosperugbovo@gmail.com)**. We offer professional installation services to help you get set up quickly and securely.
+</Warning>
+
+## Requirements
+
+Before installing the software, please make sure your server meets the requirements below.
+
+<Tip>
+If you plan to use **Docker**, you can skip the section as it already fulfil the requirements listed below.
+</Tip>
+
+- PHP 8.3+
+- Apache/Nginx
+- MySQL 8.0+ or any relational database like PostgreSQL, SQLite, etc.
+- Node.js 20.x+
+- Composer
+- NPM
+
+## Installation
+
+Once you download the masteringx archive, you will see the following directories:
+
+```
+masteringx/
+├── docs/
+├── src/
+```
+
+Inside the `src` directory, you will see the all source code and files of Masteringx.
+Upload all files from `src` directory to the root directory of the server where you want to install Masteringx.
+
+#### Copy .env file
+
+To get started, you have to copy `.env.example` file to `.env` and edit the file.
+
+```bash
+cp .env.example .env
+```
+
+Ensure you edit the file to match your servers environment variables.
+
+#### FS Permissions
+
+MasteringX requires some permissions to be set for the storage and public directories.
+
+```bash
+# Go to the root directory of your  application
+cd /path/to/your/masteringx
+
+# Set the correct permissions for the storage and public directories
+sudo chown -R $USER:www-data .
+chmod -R ug+rwx storage bootstrap/cache
+```
+
+To install this application, you have two options which we would go over below.
+
+#### Generate App key
+
+need words
+
+```bash
+php artisan key:generate
+```
+
+### Option 1: Install using Docker
+
+The application comes with a Docker compose configuration for easy deployment. To use this option, ensure that you have
+docker installed install your server.
+
+To verify your installation, run the command below:
+
+```bash Terminal
+docker --version
+docker compose --version
+```
+
+If the above command returns error, you can following the installation instruction on
+this [site](https://docs.docker.com/engine/install/).
+
+The only everything you need to do is to run the command below and let docker do it's magic:
+
+```bash Terminal
+docker compose up  -d --build
+```
+
+It will take a while to build the containers, because it will install all the dependencies and compile the assets.
+
+If everything is done correctly, you should see message about successful build and running of the containers.
+
+### Option 2: Install on  Linux Server
+
+<Note>
+ ⚠️ Note:
+
+To ensure long-term stability and compatibility, we recommend beginning with a clean Linux installation like Ubuntu
+22.04 LTS.
+</Note>
+
+#### Server Configurations
+
+For the application to run smoothly on the fresh installation, some system packages and PHP extensions needs to be
+installed. Run the commands below to install these packages on your server:
+
+##### copy from your docker file
+
+```bash Terminal
+sudo apt-get update
+sudo apt-get install -y software-properties-common \
+    apt-utils \
+    libpq-dev \
+    libpng-dev \
+    openssl \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libwebp-dev \
+    libxpm-dev \
+    libgd-dev \
+    libzip-dev \
+    libicu-dev \
+    zip \
+    unzip \
+    git \
+    libonig-dev \
+    libxml2-dev \
+    libsqlite3-dev \
+    libssl-dev \
+    curl
+```
+
+After the installation is complete, although this might take a while. rRun the command below to install the PHP
+extensions
+
+```bash Terminal
+# Install PHP and basic extensions
+sudo apt-get install php php-cli php-fpm php-mysql php-gd php-intl \
+php-mbstring php-zip php-bcmath php-opcache php-curl php-xml php-posix php-fileinfo
+
+```
+
+Following that, enable the extensions in your `php.ini` file:
+
+```ini php.ini
+extension=gd
+extension=intl
+extension=mbstring
+extension=pdo_mysql
+extension=mysqli
+extension=bcmath
+extension=pcntl
+extension=zip
+extension=opcache
+extension=posix
+extension=file-info
+```
+
+<Tip>
+ Ensure that there are no duplicates, as some extensions may have been enabled.
+</Tip>
+Verify that the extension have been installed and properly configured by running:
+
+```bash Terminal
+php -m | grep -E "(gd|intl|mbstring|pdo_mysql|mysqli|bcmath|pcntl|zip|opcache|file-info|posix)"
+```
+
+This should list all the required extensions if properly installed.
+
+#### Install Dependencies
+
+Now you have to install two types of dependencies, first is PHP dependencies and second is CSS/JS/Node.js dependencies.
+
+Since you already have PHP installed with composer, you can just run the following command to install PHP dependencies:
+
+```bash
+composer install
+```
+
+Once you see a success message from Composer installation, let's install Node.js dependencies.
+
+```bash
+npm ci
+```
+
+If everything is done right, all PHP and NodeJS dependencies will be installed successfully and we can move to the next
+step.
+
+#### Database Configuration
+
+Now, we are ready to configure the DB for your application. Do the following steps:
+
+Open the .env file and edit the following variables:
+
+```env .env
+# or any other database you want to use
+DB_CONNECTION=mysql
+
+# or your database host
+DB_HOST=127.0.0.1
+
+# or your database port
+DB_PORT=3306
+
+# or your database name
+DB_DATABASE=masteringx
+
+# replace with your database username
+DB_USERNAME=masteringx_user
+
+# replace with your database password
+DB_PASSWORD=supersecurepassword
+```
+
+The next step is to run the migrations and link the storage directory. Run the following command:
+
+```bash
+php artisan migrate --force
+php artisan db:seed
+php artisan storage:link
+```
+
+If the database does not exist yet, the CLI may prompt you to create it automatically. Confirm with `Y` and hit `enter`.
+
+These commands will create the database tables and seed the database with the default data.
+
+If all previous steps are completed right, we must move to the next step - building frontend.
+
+Since masteringx frontend is built with VueJS and TailwindCSS, we use Vite for building frontend. So, you need to run
+the following command to build the frontend:
+
+```bash
+npm run build
+```
+
+If everything runs correctly, all frontend assets will be built and stored in the `public/` directory.
+
+#### HTTP Server
+
+ColibriPlus allows you to use any HTTP server you want to use. But, we recommend you to use Nginx for production
+environment. And the documentation below is for Nginx.
+
+Nginx configuration
+<Warning>
+WARNING
+
+✋✋✋✋✋
+
+Attention! At this stage, your nginx server must be running and listening on port 443. As we are using SSL, you must
+have a valid SSL certificate for your domain. You can use Let's Encrypt for free.
+
+This guide does not cover the HTTP server setup, SSL certificate setup, or any other server tools. If you are not
+familiar with these tools, please consider using our installation service. You can contact me via My website.
+</Warning>
+You can find the Nginx configuration file example in `docker/prod/nginx/conf.d/nginx.conf` file.
+
+Please note that your Nginx root must root must point to the public directory of your application not the root directory
+itself.
+
+You can add or change server block for your needs if you know what you are doing.
+
+```conf
+server {
+    listen 443 ssl;
+    server_name www.your-domain.com your-domain.com;
+    root /path/to/masteringx/public;
+	client_max_body_size 4G;
+
+  
+  proxy_buffer_size    64k;
+  proxy_buffers     16 32k;
+  proxy_busy_buffers_size 64k;
+  proxy_temp_file_write_size 64k;
+  proxy_pass_header Set-Cookie;
+  proxy_redirect     off;
+  proxy_hide_header  Vary;
+  proxy_set_header   Accept-Encoding '';
+  proxy_ignore_headers Cache-Control Expires;
+  proxy_set_header   Referer $http_referer;
+  proxy_set_header   Host   $host;
+  proxy_set_header   Cookie $http_cookie;
+  proxy_set_header   X-Real-IP  $remote_addr;
+  proxy_set_header X-Forwarded-Host $host;
+  proxy_set_header X-Forwarded-Server $host;
+  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  # 2 hours timeout
+  proxy_read_timeout 7200s;
+  proxy_connect_timeout 7200s;
+  proxy_send_timeout 7200s;
+  send_timeout 7200s;
+
+  add_header X-Frame-Options "SAMEORIGIN";
+  add_header X-XSS-Protection "1; mode=block";
+  add_header X-Content-Type-Options "nosniff";
+
+  index index.html index.htm index.php;
+
+  charset utf-8;
+
+  location / {
+		try_files $uri $uri/ /index.php?$query_string;
+	}
+
+	location = /favicon.ico { access_log off; log_not_found off; }
+	location = /robots.txt  { access_log off; log_not_found off; }
+
+	error_page 404 /index.php;
+
+	location ~ \.php$ {
+		try_files $uri =404;
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		fastcgi_pass php-fpm:9000;
+		fastcgi_index index.php;
+		include fastcgi_params;
+		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+		fastcgi_param PATH_INFO $fastcgi_path_info;
+		fastcgi_read_timeout 240;
+	}
+
+	location ~* \.(jpg|jpeg|gif|png|css|js|ico|svg|woff|woff2|ttf|otf|eot|ttf|ttc|map|mp4|webm|ogg|ogv|webp|zip|rar|tar|gz|bz2|7z)$ {
+
+	    try_files $uri /index.php?$query_string;
+		expires max;
+		log_not_found off;
+	}
+}
+
+```
+
+After you have added the server block to your nginx configuration file, you can test your configuration by running the
+following command:
+
+```bash
+nginx -t
+```
+
+If you get no errors, you can restart your nginx server by running the following commands:
+
+```bash
+sudo systemctl restart nginx
+sudo systemctl restart php-fpm
+```
+
+And finally, to optimize your application, you can run the following commands:
+
+```bash
+php artisan optimize
+php artisan filament:optimize
+```
+
+**Check this out**
+
+If everything is done right, you can access your application by visiting your domain name in your browser.
+
+## What is Next?
+
+Woohoo! You did a great job. Your social media application is almost ready to use. However ColibriPlus is not like a
+refrigerator that you can just plug in and it's ready to use. It is a network full-stack application that requires some
+configurations and settings.
+
+Once you’ve installed Masteringx using your preferred method, you’re ready to start building! For additional
+configuration and advanced features, explore the rest of the documentation.
+
+Next most important parts that must be configured are:
+
+- Websockets (Reverb) setup
+- FFmpeg
+- SMTP
+- Social Login
+
+
+
