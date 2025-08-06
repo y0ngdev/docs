@@ -11,8 +11,8 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
-        "groups": [
+        
+         "groups": [
           {
             "group": "Getting Started",
             "pages": [
@@ -37,7 +37,8 @@
               "features/demo"
             ]
           }
-        ]
+        ],
+        "tab": " "
       }
     ],
     "global": {

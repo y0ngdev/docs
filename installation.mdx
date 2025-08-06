@@ -2,7 +2,7 @@
 title: "Installation"
 ---
 
-# Use quill bot
+
 
 **MasteringX is a Laravel powered full-stack web application, designed primarily for Linux environments.**
 
@@ -50,6 +50,9 @@ Upload all files from `src` directory to the root directory of the server where 
 To get started, you have to copy `.env.example` file to `.env` and edit the file.
 
 ```bash
+# Go to the root directory of your  application
+cd /path/to/your/masteringx
+
 cp .env.example .env
 ```
 
@@ -60,23 +63,12 @@ Ensure you edit the file to match your servers environment variables.
 MasteringX requires some permissions to be set for the storage and public directories.
 
 ```bash
-# Go to the root directory of your  application
-cd /path/to/your/masteringx
-
 # Set the correct permissions for the storage and public directories
 sudo chown -R $USER:www-data .
 chmod -R ug+rwx storage bootstrap/cache
 ```
 
 To install this application, you have two options which we would go over below.
-
-#### Generate App key
-
-need words
-
-```bash
-php artisan key:generate
-```
 
 ### Option 1: Install using Docker
 
@@ -96,10 +88,33 @@ this [site](https://docs.docker.com/engine/install/).
 The only everything you need to do is to run the command below and let docker do it's magic:
 
 ```bash Terminal
-docker compose up  -d --build
+docker compose up -d  --build
+```
+It will take a while to build the containers, because it will install all the dependencies and compile the assets.
+
+
+Next, run this command to sh into the container:
+```bash Terminal
+docker exec -it masteringx-php-fpm bash
 ```
 
-It will take a while to build the containers, because it will install all the dependencies and compile the assets.
+And run this to generate the app key:
+
+```bash
+php artisan key:generate --show
+```
+Copy and paste the outputted value into the `APP_KEY` variable in your `.env` file.
+
+Down the container
+```bash
+docker compose down
+```
+and restart it.
+```bash
+docker compose -d up
+```
+From now on, you only need to run this command.
+
 
 If everything is done correctly, you should see message about successful build and running of the containers.
 
@@ -194,6 +209,13 @@ Once you see a success message from Composer installation, let's install Node.js
 
 ```bash
 npm ci
+```
+
+#### Generate App key
+
+
+```bash
+php artisan key:generate
 ```
 
 If everything is done right, all PHP and NodeJS dependencies will be installed successfully and we can move to the next
@@ -367,19 +389,17 @@ If everything is done right, you can access your application by visiting your do
 
 ## What is Next?
 
-Woohoo! You did a great job. Your social media application is almost ready to use. However ColibriPlus is not like a
-refrigerator that you can just plug in and it's ready to use. It is a network full-stack application that requires some
-configurations and settings.
+You did a great job. Your application is almost ready to use.
 
 Once you’ve installed Masteringx using your preferred method, you’re ready to start building! For additional
 configuration and advanced features, explore the rest of the documentation.
 
 Next most important parts that must be configured are:
 
-- Websockets (Reverb) setup
 - FFmpeg
 - SMTP
-- Social Login
+- Queues
+
 
 
 

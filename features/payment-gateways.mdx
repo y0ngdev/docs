@@ -19,7 +19,6 @@ You can enable and manage Stripe in two ways:
 Add the following variables to your `.env` file:
 
 ```env
-STRIPE_ENABLED=true
 STRIPE_SECRET_KEY=your_stripe_secret_key
 STRIPE_PUBLIC_KEY=your_stripe_public_key
 ````
@@ -36,6 +35,9 @@ You can also enable and configure Stripe directly in the admin panel:
 
 Changes made through the dashboard are applied instantly.
 
+<Warning>
+If you make use of docker, editing from the dashboard fails cos the `.env` file isn't added to the container for security measures.
+</Warning>
 ---
 
 ###  Clearing the Configuration Cache
